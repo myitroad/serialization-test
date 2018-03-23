@@ -10,8 +10,11 @@ import java.io.*;
  */
 public class JdkSerializer implements Serializer {
 
+    @Override
     public <T> byte[] serialize(T object) {
         byte[] bytes = null;
+        //使用Try-with-resources方式，使得try语句块中的代码执行完或者发生异常时，都会关闭圆括号中打开的资源
+        //注意，需要资源实现java.lang.AutoCloseable接口，参见https://blog.csdn.net/wtopps/article/details/71108342
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(out)) {
             objectOutputStream.writeObject(object);
@@ -22,6 +25,7 @@ public class JdkSerializer implements Serializer {
         return bytes;
     }
 
+    @Override
     public <T> T deserialize(byte[] bytes, Class<T> clazz) {
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
              ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {

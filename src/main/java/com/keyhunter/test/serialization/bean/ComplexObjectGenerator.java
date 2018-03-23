@@ -4,6 +4,7 @@ import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Random;
 
 /**
  * @auther yingren
@@ -18,6 +19,10 @@ public class ComplexObjectGenerator {
         generator.generateSourceFile();
     }
 
+    /***
+     * 使用反射机制，填充对象实例成员的代码
+     * @return ComplexObject
+     */
     public ComplexObject generate() {
         ComplexObject complexObject = new ComplexObject();
         try {
@@ -25,10 +30,10 @@ public class ComplexObjectGenerator {
             for (int i = 0; i < LOOP_SIZE; i++) {
                 Method setJustAName = clazz.getDeclaredMethod("setJustAName" + i, String.class);
                 setJustAName.setAccessible(true);
-                setJustAName.invoke(complexObject, "this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,this is just a name,");
+                setJustAName.invoke(complexObject, "This is just a name of sequence "+ i);
                 Method setJustANumber = clazz.getDeclaredMethod("setJustANumber" + i, int.class);
                 setJustANumber.setAccessible(true);
-                setJustANumber.invoke(complexObject, Integer.valueOf(243242322));
+                setJustANumber.invoke(complexObject, Integer.valueOf(new Random().nextInt()));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,6 +41,11 @@ public class ComplexObjectGenerator {
         return complexObject;
     }
 
+    /**
+     * 生成复杂对象Java类的代码ComplexObject.java
+     * @throws IOException
+     * @throws URISyntaxException
+     */
     public void generateSourceFile() throws IOException, URISyntaxException {
         String path = ComplexObjectGenerator.class.getClassLoader().getResource("").toString().replace("target/classes/", "/src/main/java/com/keyhunter/test/serialization/bean/ComplexObject.java");
         File file = new File(new URI(path));

@@ -18,6 +18,8 @@ public class KryoSerializer implements Serializer {
 
     @Override
     public <T> byte[] serialize(T object) {
+        //使用Try-with-resources方式，使得try语句块中的代码执行完或者发生异常时，都会关闭圆括号中打开的资源
+        //注意，需要资源实现java.lang.AutoCloseable接口，参见https://blog.csdn.net/wtopps/article/details/71108342
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
              Output output = new Output(outputStream)) {
             kryo.writeObject(output, object);
