@@ -42,3 +42,5 @@ FastJSON Jackson XML JDK ProtoBuffer Kyro 几种序列化方式的 demo 和简�
 
 ![复杂对象序列化结果](https://cloud.githubusercontent.com/assets/7654175/23894258/5fbfd970-08dc-11e7-8f5a-707f308e5d1f.png)
 
+## 参考资料
+[1][使用Serializable接口进行JAVA的序列化和反序列化](http://www.cnblogs.com/myitroad/p/8630632.html)
